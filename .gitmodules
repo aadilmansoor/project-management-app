@@ -1,3 +1,7 @@
 [submodule "client"]
   path = client
   url = https://github.com/aadilmansoor/Project-Management-App-Client.git
+
+[submodule "server"]
+  path = server
+  url = https://github.com/aadilmansoor/Project-Management-App-Server.git
