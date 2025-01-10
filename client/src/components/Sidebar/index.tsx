@@ -2,7 +2,8 @@
 
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
-import { useGetProjectsQuery } from "@/state/api";
+import { useGetAuthUserQuery, useGetProjectsQuery } from "@/state/api";
+import { signOut } from "aws-amplify/auth";
 import {
   AlertCircle,
   AlertOctagon,
@@ -35,6 +36,18 @@ const Sidebar = () => {
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed,
   );
+
+  const { data: currentUser } = useGetAuthUserQuery({});
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error("Error signing out: ", error)
+    }
+  }
+
+  if (!currentUser) return null;
+  const currentUserDetails = currentUser?.userDetails;
 
   const sidebarClassNames = `fixed flex flex-col h-[100%] justify-between shadow-xl transition-all 
     h-full z-40 dark:bg-black overflow-y-auto bg-white w-64
@@ -142,6 +155,29 @@ const Sidebar = () => {
           </>
         )}
       </div>
+      <div className="z-10 mt-32 flex w-full flex-col items-center gap-4 bg-white px-8 py-4 dark:bg-black md:hidden">
+        <div className="flex w-full items-center">
+          <div className="align-center flex size-9 justify-center">
+            {!!currentUserDetails?.profilePictureUrl ? (
+              <Image
+                src={`https://pm-s3-imagez.s3.eu-north-1.amazonaws.com/${currentUserDetails?.profilePictureUrl}`}
+                alt={currentUserDetails?.username || "User Profile Picture"}
+                height={100}
+                width={50}
+                className="h-full rounded-full object-cover"
+              />
+            ) : (
+              <User className="size-6 cursor-pointer self-center rounded-full dark:text-white" />
+            )}
+          </div>
+          <span className="mx-3 text-gray-800 dark:text-white">
+            {currentUserDetails?.username}
+          </span>
+          <button className="self-start rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white hover:bg-blue-600 md:block" onClick={handleSignOut}>
+            Sign out
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
@@ -159,9 +195,8 @@ const SidebarLink = ({ href, icon: Icon, label }: SidebarLinkProps) => {
   return (
     <Link href={href} className="w-full">
       <div
-        className={`relative flex cursor-pointer items-center gap-3 transition-colors hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700 ${
-          isActive ? "bg-gray-100 text-white dark:bg-gray-600" : ""
-        } justify-start px-8 py-3`}
+        className={`relative flex cursor-pointer items-center gap-3 transition-colors hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700 ${isActive ? "bg-gray-100 text-white dark:bg-gray-600" : ""
+          } justify-start px-8 py-3`}
       >
         {isActive && (
           <div className="absolute left-0 top-0 h-[100%] w-[5px] bg-blue-200"></div>
