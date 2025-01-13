@@ -44,6 +44,7 @@ export const createUsers = async (req: Request, res: Response): Promise<void> =>
         });
         res.json({ message: "User Created Successfully", newUser})
     } catch (error: any) {
+        console.log(error.message)
         res.status(500).json({ message: `Error creating users: ${error.message}` })
     }
 }
