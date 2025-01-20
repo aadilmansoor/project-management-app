@@ -55,11 +55,11 @@ const Sidebar = () => {
 
   return (
     <div className={sidebarClassNames}>
-      <div className="flex h-[100%] w-full flex-col justify-start">
+      <div className="flex w-full flex-col justify-start relative">
         {/* TOP LOGO */}
-        <div className="z-50 flex min-h-[56px] w-64 items-center justify-between bg-white px-6 pt-3 dark:bg-black">
+        <div className="z-50 flex min-h-[56px] w-64 items-center justify-between bg-white px-6 pt-3 dark:bg-black mb-32">
           <div className="text-xl font-bold text-gray-800 dark:text-white">
-            EDLIST
+            AMLIST
           </div>
           {isSidebarCollapsed ? null : (
             <button
@@ -155,7 +155,7 @@ const Sidebar = () => {
           </>
         )}
       </div>
-      <div className="z-10 mt-32 flex w-full flex-col items-center gap-4 bg-white px-8 py-4 dark:bg-black md:hidden">
+      <div className="z-10 flex w-64 flex-col items-center gap-4 bg-white px-8 py-4 dark:bg-black md:hidden fixed bottom-0">
         <div className="flex w-full items-center">
           <div className="align-center flex size-9 justify-center">
             {!!currentUserDetails?.profilePictureUrl ? (
