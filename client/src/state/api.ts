@@ -125,8 +125,15 @@ export const api = createApi({
             providesTags: (result) => result ? result.map(({ id }) => ({ type: "Tasks" as const, id })) : [{ type: "Tasks" as const }]
         }),
         getTasksByUser: build.query<Task[], number>({
-            query: (userId) => `tasks/user/${userId}`,
-            providesTags: (result, error, userId) => result ? result.map(({id}) => ({ type: "Tasks", id })) : [{type: "Tasks", id: userId}]
+            query: (userId) => {
+                console.log("User ID:", userId); // Log userId
+                return `tasks/user/${userId}`;
+            },
+            providesTags: (result, error, userId) => {
+                console.log("Result:", result); // Log result
+                console.log("User ID in providesTags:", userId); // Log userId again
+                return result ? result.map(({ id }) => ({ type: "Tasks", id })) : [{ type: "Tasks", id: userId }];
+            }
         }),
         createTask: build.mutation<Task, Partial<Task>>({
             query: (task) => ({
