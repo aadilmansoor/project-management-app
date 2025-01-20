@@ -80,6 +80,7 @@ export const api = createApi({
         prepareHeaders: async (headers) => {
             const session = await fetchAuthSession();
             const { accessToken } = session?.tokens ?? {};
+            
             if (accessToken){
                 headers.set("Authorization", `Bearer ${accessToken}`)
             }
@@ -98,7 +99,10 @@ export const api = createApi({
                    const { userSub } = session;
 
                    const userDetailsResponse = await fetchWithBQ(`users/${userSub}`);
+                   console.log({userDetailsResponse});
+                   
                    const userDetails = userDetailsResponse.data as User;
+                   
 
                    return { data: { user, userSub, userDetails}};
                 } catch (error: any) {
