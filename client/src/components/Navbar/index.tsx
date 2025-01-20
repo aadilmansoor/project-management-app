@@ -56,7 +56,7 @@ const Navbar = () => {
                 <Settings className="h-6 w-6 cursor-pointer dark:text-white" />
             </Link>
             <div className="ml-2 mr-5 hidden min-h-[2em] w-[0.1rem] bg-gray-200 md:inline-block"></div>
-            <div className="hidden items-center justify-between">
+            <div className="hidden items-center justify-between md:flex">
               <div className="align-center flex size-9 justify-center">
                 {!!currentUserDetails?.profilePictureUrl ? (
                           <Image
