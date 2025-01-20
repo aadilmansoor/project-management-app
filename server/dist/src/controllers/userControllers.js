@@ -51,6 +51,7 @@ const createUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json({ message: "User Created Successfully", newUser });
     }
     catch (error) {
+        console.log(error.message);
         res.status(500).json({ message: `Error creating users: ${error.message}` });
     }
 });
