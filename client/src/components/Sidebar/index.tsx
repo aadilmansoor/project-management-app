@@ -114,7 +114,7 @@ const Sidebar = () => {
               key={project.id}
               icon={Briefcase}
               label={project.name}
-              href={`${project.id}`}
+              href={`/projects/${project.id}`}
             />
           ))}
         {/* PRIORITIES LINKS */}
