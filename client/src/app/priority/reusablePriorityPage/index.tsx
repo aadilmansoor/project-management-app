@@ -80,7 +80,7 @@ const ReusablePriorityPage = ({ priority }: Props) => {
     isError: isTasksError,
   } = useGetTasksByUserQuery(userId || 0, {
     skip: userId === null,
-  });n
+  });
 
   console.log({currentUser})
 
